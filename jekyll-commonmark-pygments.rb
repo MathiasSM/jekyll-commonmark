@@ -1,11 +1,8 @@
-# Frozen-string-literal: true
-# Encoding: utf-8
-
 module Jekyll
   module Converters
     class Markdown::CommonMark
       def initialize(config)
-        Jekyll::External.require_with_graceful_fail "commonmarker"
+        Jekyll::External.require_with_graceful_fail "../commonmarker-pygments/commonmarker/pygments.rb"
         begin
           @options = config['commonmark']['options'].collect { |e| e.upcase.to_sym }
         rescue NoMethodError
@@ -22,7 +19,7 @@ module Jekyll
       end
 
       def convert(content)
-        CommonMarker.render_doc(content, @options).to_html
+        CommonMarker::Pygments.render_doc(content, @options).to_html
       end
     end
   end
